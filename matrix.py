@@ -65,7 +65,6 @@ def main():
     print (">> welcome to this repetition analyzer")
     print (">> loading required credentials")
     client_access_code, client_secure_code, client_auth_token = loadCredentials()
-
     song_name = input(">> what song would you like to visualize?\n")
     lyrics = ''
     print(">> searching for " + song_name)
