@@ -7,7 +7,8 @@ This repetition analyzer takes in a sing name and creates an image that represen
 
 1. Make sure you have installed virtualen, or if not then run `pip3 install virtualenv`
 2. Create the python three virtual enviroment `virtualenv venv`
-3. Automatically install all relevant dependencies using the following command `pip install -r requirements.txt`
+3. Start the enviroment `source venv/bin/activate`
+4. Automatically install all relevant dependencies using the following command `pip install -r requirements.txt`
 ### Manul Installation
 1. Make sure you have installed virtualen, or if not then run `pip3 install virtualenv`
 2. Create the python three virtual enviroment `virtualenv venv`
