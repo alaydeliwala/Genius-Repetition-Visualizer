@@ -24,6 +24,8 @@ The output avalible in a `repetition-matrix.ppm` file
 6. Install bs4 (Beautiful Soup 4) `pip install bs4`
 *Make sure all downloaded items are for Python 3.x*
 ## Usage
+<p align = "center"><a href="url"><img src="https://github.com/alaydeliwala/Genius-Repetition-Visualizer/blob/master/img/working.gif" width="700"></a></p>
+
 In the root folder of the program run this command to start the virtual enviorment
 ```shell
 $ source venv/bin/activate
