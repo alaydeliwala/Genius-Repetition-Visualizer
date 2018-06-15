@@ -12,7 +12,7 @@ BASE_URL = "http://api.genius.com"
 # Credentials can be goten from the Genius API Management Site
 def loadCredentials():
     # Makes the contents of the file into a list
-    credentials = [line.rstrip('\n') for line in open ('credentials.ini')]
+    credentials = [line.rstrip('\n') for line in open ('credentials.txt')]
     # Loops through the file to look for the specified information
     for line in credentials:
         if "client_id" in line:
