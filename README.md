@@ -8,6 +8,13 @@ This repetition analyzer can search for any song through the genius API and then
 Given a text of length n tokens, it constructs an n x n matrix, where (i, j) is filled in if the ith and jth words are the same (after some normalization).
 
 The output avalible in a `repetition-matrix.ppm` file
+
+<p float="center">
+  <img src="https://github.com/alaydeliwala/Genius-Repetition-Visualizer/blob/master/img/Holy%20Grail%20by%20JAY-Z%20(Ft.%20Justin%20Timberlake).png" width="275" />
+  <img src="https://github.com/alaydeliwala/Genius-Repetition-Visualizer/blob/master/img/Man's%20Not%20Hot%20by%20Big%20Shaq.png" width="275" /> 
+  <img src="https://github.com/alaydeliwala/Genius-Repetition-Visualizer/blob/master/img/Stir%20Fry%20by%20Migos.png" width="275" />
+</p>
+
 ## Setup
 ### Auto Installation using pip!
 
