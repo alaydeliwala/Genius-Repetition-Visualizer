@@ -36,6 +36,6 @@ $ python matrix.py
 
 ## Shoutouts
 
- - Shoutout to @genius for being the world's greatest public knowledge project since Wikipedia and making all their information avalible to us through their amazing public API :notes: :books: 
+ - Shoutout to @genius for being the world's greatest public knowledge project since Wikipedia and making all their information avalible to us through their amazing public API :notes::books:
  - Shoutout to [SongSim](https://colinmorris.github.io/SongSim/#/) for the original analysis idea :heart_eyes:
  - Shoutout to [requests](https://github.com/requests/requests-oauthlib) for a great HTTP and OAuth2 tool for humans ✨🍰✨
