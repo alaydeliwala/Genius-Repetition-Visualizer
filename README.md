@@ -3,9 +3,9 @@
 ## About
 This repetition analyzer can search for any song through the genius API and then creates an image from the songs self-similarity matrix
 
-Given a text of length n tokens, it constructs an n x n matrix, where (i, j) is filled in if the ith and jth words are the same (after some normalization).
+<p align = "center"><a href="url"><img src="https://github.com/alaydeliwala/Genius-Repetition-Visualizer/blob/master/img/barbie.png?raw=true" height="250" width="250"></a></p>
 
-<p align = "center"><a href="url"><img src="https://github.com/alaydeliwala/Genius-Repetition-Visualizer/blob/master/img/barbie.png?raw=true" height="150" width="150"></a></p>
+Given a text of length n tokens, it constructs an n x n matrix, where (i, j) is filled in if the ith and jth words are the same (after some normalization).
 
 The output avalible in a `repetition-matrix.ppm` file
 ## Setup
