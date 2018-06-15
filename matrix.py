@@ -3,14 +3,12 @@ import time
 from bs4 import BeautifulSoup
 import numpy as lin_alg
 import os
-
 # Using regex to get client information
 import re
 
 BASE_URL = "http://api.genius.com"
-
-DISPLAY_WIDTH = 32 * 1 #32 pixels x 1 displays
-DISPLAY_HEIGHT = 16
+RED='\033[0;32m'
+NC='\033[0m' # No Color
 
 # Loads the credentials from the credentials.ini file
 # Credentials can be goten from the Genius API Management Site
@@ -44,7 +42,8 @@ def searchSong(song_name, token):
         # Gets the api_path of the song
         # Need to check if result is matched
         path = response.json()['response']['hits'][0]['result']['api_path']
-        return path
+        name = response.json()['response']['hits'][0]['result']['full_title']
+        return path, name
 
 # Gets the lyrics for the specified song
 def getLyrics(path, token):
@@ -63,18 +62,20 @@ def getLyrics(path, token):
 
 def main():
     print (">> welcome to this repetition analyzer")
+    song_name = input(">> what song would you like to visualize?\n")
     print (">> loading required credentials")
     client_access_code, client_secure_code, client_auth_token = loadCredentials()
-    song_name = input(">> what song would you like to visualize?\n")
     lyrics = ''
-    print(">> searching for " + song_name)
-    path = searchSong(song_name, client_auth_token)
+    print(">> searching through \033[93mGenius\033[0m")
+    path, name = searchSong(song_name, client_auth_token)
+    print(">> match found -> \033[0;32m" + name + "\033[0m")
     if path:
-        print(">> scraping lyrics for " + song_name)
-        lyrics = getLyrics(path,client_auth_token)
-        print(lyrics)
+        print(">> scraping lyrics and removing common words")
+        lyrics= getLyrics(path,client_auth_token)
+        # print(lyrics)
     else:
-        print(">> no songs matched")
+        print(">> \033[0;31mno match found\033[0m")
+    print(">> creating the self-similarity matrix")
     lyrics_list = re.split("\n| (|) | |, | ,", lyrics)
     temp_list = []
     for item in lyrics_list:
@@ -83,8 +84,7 @@ def main():
     lyrics_list = temp_list
     matrix = lin_alg.zeros((len(lyrics_list), len(lyrics_list)))
 
-    screen = [[0,0,0] for x in range(DISPLAY_WIDTH*DISPLAY_HEIGHT)]
-    ppmfile=open("picture.ppm",'w+') # note the binary flag
+    ppmfile=open("repetition-matrix.ppm",'w+') # note the binary flag
     ppmfile.write("%s\n" % ('P3'))
     ppmfile.write("%d %d\n" % (len(lyrics_list), len(lyrics_list)))
     ppmfile.write("255\n")
@@ -100,6 +100,7 @@ def main():
     #     ins = 0
     #     out=out+1
 
+    print(">> creating \033[0;34mrepetition-matrix.ppm\033[0m file")
     out = 0;
     ins = 0;
     while out < len(lyrics_list):
@@ -119,5 +120,6 @@ def main():
     ppmfile.truncate(size - 1)
     ppmfile.seek(0,2)
     ppmfile.write("\n")
+    print(">> \033[0;32mcomplete\033[0m")
 
 if (__name__ == "__main__") : main()

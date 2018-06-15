@@ -2,3 +2,4 @@ venv/
 credentials.ini
 .vscode/
 Makefile
+picture.ppm

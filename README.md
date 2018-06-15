@@ -1,7 +1,19 @@
 # Genius-Repetition-Visualizer
 
 ## About
-This repetition analyzer takes in a sing name and creates an image that represents the word repetition throught the song. The output is in a `picture.ppm` file
+This repetition analyzer can search for any song through the genius API and then creates an image from the songs self-similarity matrix
+
+Given a text of length n tokens, it constructs an n x n matrix, where (i, j) is filled in if the ith and jth words are the same (after some normalization).
+
+|          	| Okay 	| It's 	| Childish 	| Gambino 	|
+|:--------:	|:----:	|:----:	|:--------:	|:-------:	|
+|   Okay   	|   X  	|      	|          	|         	|
+|   It's   	|      	|   X  	|          	|         	|
+| Childish 	|      	|      	|     X    	|         	|
+| Gambino 	|      	|      	|         	|     X  	|
+*Bonfire by Childish Gambino*
+
+The output avalible in a `repetition-matrix.ppm` file
 ## Setup
 ### Auto Installation using pip!
 
