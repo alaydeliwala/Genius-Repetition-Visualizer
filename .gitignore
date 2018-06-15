@@ -2,4 +2,4 @@ venv/
 credentials.ini
 .vscode/
 Makefile
-picture.ppm
+repetition-matrix.ppm
