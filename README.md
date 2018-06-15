@@ -11,6 +11,7 @@ Given a text of length n tokens, it constructs an n x n matrix, where (i, j) is 
 |   It's   	|      	|   X  	|          	|         	|
 | Childish 	|      	|      	|     X    	|         	|
 | Gambino 	|      	|      	|         	|     X  	|
+
 *Bonfire by Childish Gambino*
 
 The output avalible in a `repetition-matrix.ppm` file
