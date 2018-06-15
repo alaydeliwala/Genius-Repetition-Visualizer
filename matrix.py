@@ -7,8 +7,6 @@ import os
 import re
 
 BASE_URL = "http://api.genius.com"
-RED='\033[0;32m'
-NC='\033[0m' # No Color
 
 # Loads the credentials from the credentials.ini file
 # Credentials can be goten from the Genius API Management Site
@@ -40,8 +38,8 @@ def searchSong(song_name, token):
     # Checks to make sure there are hits on the song name
     if len(response.json()['response']['hits']) != 0:
         # Gets the api_path of the song
-        # Need to check if result is matched
         path = response.json()['response']['hits'][0]['result']['api_path']
+        # Gets the name of the song
         name = response.json()['response']['hits'][0]['result']['full_title']
         return path, name
 
