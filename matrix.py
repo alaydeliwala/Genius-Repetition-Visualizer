@@ -87,17 +87,6 @@ def main():
     ppmfile.write("%d %d\n" % (len(lyrics_list), len(lyrics_list)))
     ppmfile.write("255\n")
 
-    # out = 0;
-    # ins = 0;
-    # while out < len(lyrics_list):
-    #     while ins < len(lyrics_list):
-    #         if(lyrics_list[out] == lyrics_list[ins]):
-    #             matrix[out,ins] = 1
-    #             matrix[ins,out] = 1
-    #         ins=ins+1
-    #     ins = 0
-    #     out=out+1
-
     print(">> creating \033[0;34mrepetition-matrix.ppm\033[0m file")
     out = 0;
     ins = 0;
