@@ -10,9 +10,8 @@ Given a text of length n tokens, it constructs an n x n matrix, where (i, j) is 
 The output avalible in a `repetition-matrix.ppm` file
 
 <p float="center">
-  <img src="https://github.com/alaydeliwala/Genius-Repetition-Visualizer/blob/master/img/Holy%20Grail%20by%20JAY-Z%20(Ft.%20Justin%20Timberlake).png" width="275" />
-  <img src="https://github.com/alaydeliwala/Genius-Repetition-Visualizer/blob/master/img/Man's%20Not%20Hot%20by%20Big%20Shaq.png" width="275" /> 
-  <img src="https://github.com/alaydeliwala/Genius-Repetition-Visualizer/blob/master/img/Stir%20Fry%20by%20Migos.png" width="275" />
+    <img src="https://github.com/alaydeliwala/Genius-Repetition-Visualizer/blob/master/img/Holy%20Grail%20by%20JAY-Z%20(Ft.%20Justin%20Timberlake).png" width="275" />
+    <figcaption>Holy Grail Ft. Justin Timerlake by Jay-Z</figcaption>
 </p>
 
 ## Setup
