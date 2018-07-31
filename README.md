@@ -24,7 +24,7 @@ The output avalible in a `repetition-matrix.ppm` file
 ### Manul Installation
 1. Make sure you have installed virtualen, or if not then run `pip3 install virtualenv`
 2. Create the python three virtual enviroment `virtualenv venv`
- 3. Start the enviroment `source myvenv/bin/activate`
+ 3. Start the enviroment `source venv/bin/activate`
  4. Install the pyton requests package `pip install requests`
 5. Install numpy (linear algebra package) `pip install numpy`
 6. Install bs4 (Beautiful Soup 4) `pip install bs4`
