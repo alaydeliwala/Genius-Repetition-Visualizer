@@ -9,10 +9,11 @@ Given a text of length n tokens, it constructs an n x n matrix, where (i, j) is 
 
 The output avalible in a `repetition-matrix.ppm` file
 
-<p float="center">
+<p align="center">
     <img src="https://github.com/alaydeliwala/Genius-Repetition-Visualizer/blob/master/img/Holy%20Grail%20by%20JAY-Z%20(Ft.%20Justin%20Timberlake).png" width="275" />
-    <figcaption>Holy Grail Ft. Justin Timerlake by Jay-Z</figcaption>
+    <p align="justify"> Holy Grail Ft. Justin Timerlake by Jay-Z</p>
 </p>
+
 
 ## Setup
 ### Auto Installation using pip!
