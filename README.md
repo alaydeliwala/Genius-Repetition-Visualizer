@@ -11,9 +11,11 @@ The output avalible in a `repetition-matrix.ppm` file
 
 <p align="center">
     <img src="https://github.com/alaydeliwala/Genius-Repetition-Visualizer/blob/master/img/Holy%20Grail%20by%20JAY-Z%20(Ft.%20Justin%20Timberlake).png" width="275" />
-    <p align="justify"> Holy Grail Ft. Justin Timerlake by Jay-Z</p>
 </p>
 
+<p align="center">
+    <strong>Holy Grail</strong> (Ft. Justin Timerlake) by Jay-Z
+</p>
 
 ## Setup
 ### Auto Installation using pip!
