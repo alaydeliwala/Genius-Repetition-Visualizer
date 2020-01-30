@@ -8,6 +8,15 @@ This repetition analyzer can search for any song through the genius API and then
 Given a text of length n tokens, it constructs an n x n matrix, where (i, j) is filled in if the ith and jth words are the same (after some normalization).
 
 The output avalible in a `repetition-matrix.ppm` file
+
+<p align="center">
+    <img src="https://github.com/alaydeliwala/Genius-Repetition-Visualizer/blob/master/img/Holy%20Grail%20by%20JAY-Z%20(Ft.%20Justin%20Timberlake).png" width="275" />
+</p>
+
+<p align="center">
+    <strong>Holy Grail</strong> (Ft. Justin Timerlake) by Jay-Z
+</p>
+
 ## Setup
 ### Auto Installation using pip!
 
@@ -18,12 +27,14 @@ The output avalible in a `repetition-matrix.ppm` file
 ### Manul Installation
 1. Make sure you have installed virtualen, or if not then run `pip3 install virtualenv`
 2. Create the python three virtual enviroment `virtualenv venv`
- 3. Start the enviroment `source myvenv/bin/activate`
+ 3. Start the enviroment `source venv/bin/activate`
  4. Install the pyton requests package `pip install requests`
 5. Install numpy (linear algebra package) `pip install numpy`
 6. Install bs4 (Beautiful Soup 4) `pip install bs4`
 *Make sure all downloaded items are for Python 3.x*
 ## Usage
+<p align = "center"><a href="url"><img src="https://github.com/alaydeliwala/Genius-Repetition-Visualizer/blob/master/img/working.gif" width="700"></a></p>
+
 In the root folder of the program run this command to start the virtual enviorment
 ```shell
 $ source venv/bin/activate
