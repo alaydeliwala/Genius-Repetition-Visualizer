@@ -7,4 +7,4 @@ numpy==1.18.1
 requests==2.22.0
 simple-chalk==0.1.0
 soupsieve==1.9.5
-urllib3==1.25.8
+urllib3==1.26.5
