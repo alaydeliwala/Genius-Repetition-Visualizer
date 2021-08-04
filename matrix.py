@@ -18,7 +18,7 @@ def error_message(message):
     exit(1)
 
 
-def searchSong(song_name, token):
+def search_song(song_name, token):
     """
         Seraches for a song using the Genius API
 
@@ -37,21 +37,18 @@ def searchSong(song_name, token):
         )
 
     # Checks to make sure there are hits on the song name
-    if len(response.json()['response']['hits']) != 0:
-        # Gets the api_path of the song
-        path = response.json()['response']['hits'][0]['result']['api_path']
-        # Gets the name of the song
-        name = response.json()['response']['hits'][0]['result']['full_title']
-        return path, name
-
-    else:
+    if len(response.json()['response']['hits']) == 0:
         error_message(
             "The song you searched for does not exist in "
             "the Spotify song catalog"
         )
 
+    result = response.json()['response']['hits'][0]['result']
+    print(result)
+    return result['api_path'], result['full_title']
 
-def getLyrics(path, token):
+
+def get_lyrics(path, token):
     """
         Gets the lyrics for the specified song
 
@@ -59,16 +56,27 @@ def getLyrics(path, token):
         :param token - the Spotify Authentication token
         :return the lyrics of the song
     """
+    print(path, token)
+
     song_url = BASE_URL + path
+
     response = requests.get(
-        song_url, headers={"Authorization": 'Bearer ' + token})
+        song_url, headers={"Authorization": 'Bearer ' + token}
+    )
+
     lyrics_path = response.json()['response']['song']['path']
+
     # Going to the genius page to get the lyrics for the song
     page_url = "http://genius.com" + lyrics_path
     page = requests.get(page_url)
-    html = BeautifulSoup(page.text, "html.parser")
 
-    return html.find("div", class_="lyrics").get_text()
+    html = BeautifulSoup(page.text, "html.parser")
+    lyrics_div = html.find("div", class_="lyrics")
+
+    if lyrics_div is None:
+        error_message("No Lyrics Found...")
+
+    return lyrics_div.get_text()
 
 
 def main():
@@ -88,10 +96,10 @@ def main():
         return
 
     print(">> searching through " + chalk.yellow("Genius"))
-    path, name = searchSong(song_name, credentials["client_access_token"])
+    path, name = search_song(song_name, credentials["client_access_token"])
     print(">> match found -> \033[0;32m" + name + "\033[0m")
     print(">> scraping lyrics and removing common words")
-    lyrics = getLyrics(path, credentials["client_access_token"])
+    lyrics = get_lyrics(path, credentials["client_access_token"])
     print(">> creating the self-similarity matrix")
     lyrics_list = re.split("\n| (|) | |, | ,", lyrics)
 
@@ -107,9 +115,9 @@ def main():
     ppmfile.write("255\n")
 
     print(">> creating " + chalk.blue("repetition-matrix.ppm") + " file")
-    ins = 0
+
     for out in range(len(lyrics_list)):
-        while ins < len(lyrics_list):
+        for ins in range(len(lyrics_list)):
             if lyrics_list[out] == lyrics_list[ins]:
                 ppmfile.write("178 34 34 ")
                 matrix[out, ins] = 1
@@ -117,13 +125,12 @@ def main():
             else:
                 ppmfile.write("225 225 225 ")
 
-            ins += 1
-        ins = 0
     ppmfile.seek(0, 2)
     size = ppmfile.tell()
     ppmfile.truncate(size - 1)
     ppmfile.seek(0, 2)
     ppmfile.write("\n")
+
     print(">> " + chalk.green("complete"))
 
 
