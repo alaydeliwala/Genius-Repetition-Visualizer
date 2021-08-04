@@ -13,9 +13,11 @@ BASE_URL = "http://api.genius.com"
 def loadCredentials():
     """
         Loads the credentials from the credentials.txt file
-        Credentials can be generated using the Genius API Management Site
+        Credentials can be generated using the
+            Genius API Management Site
 
-        :return the users Genius client id, client secret and client access token
+        :return the users Genius client id,
+            client secret and client access token
     """
     # Makes the contents of the file into a list
     credentials = [line.rstrip('\n') for line in open('credentials.txt')]
@@ -28,15 +30,18 @@ def loadCredentials():
         if "client_secret" in line:
             client_secret = re.findall(r'[\"\']([^\"\']*)[\"\']', line)[0]
 
-        # This is the only one that matters untill OAuth2 can be implemented
+        # This is the only one that matters
+        # until OAuth2 can be implemented
         if "client_access_token" in line:
             client_access_token = re.findall(
                 r'[\"\']([^\"\']*)[\"\']', line)[0]
 
     # Checks to see if credentials have been set
-    if(not client_secret or not client_access_token or not client_access_token):
+    if not client_secret or not client_access_token or not client_access_token:
         error_message(
-            "client_id, client_secret or client_access_token in credentials.txt is not set.")
+            "client_id, client_secret or client_access_token"
+            " in credentials.txt is not set."
+        )
 
     # Returns the credentials
     return client_id, client_secret, client_access_token
@@ -63,9 +68,10 @@ def searchSong(song_name, token):
     url = BASE_URL + '/search?q=' + edited_song_name
     response = requests.get(url, headers={"Authorization": 'Bearer ' + token})
 
-    if(response.status_code != 200):
-        error_message("Status Code: " +
-                      str(response.status_code) + response.body)
+    if response.status_code != 200:
+        error_message(
+            "Status Code: " + str(response.status_code) + response.body
+        )
 
     # Checks to make sure there are hits on the song name
     if len(response.json()['response']['hits']) != 0:
@@ -74,9 +80,12 @@ def searchSong(song_name, token):
         # Gets the name of the song
         name = response.json()['response']['hits'][0]['result']['full_title']
         return path, name
+
     else:
         error_message(
-            "The song you searched for does not exist in the Spotify song catalog")
+            "The song you searched for does not exist in "
+            "the Spotify song catalog"
+        )
 
 
 def getLyrics(path, token):
@@ -96,10 +105,7 @@ def getLyrics(path, token):
     page = requests.get(page_url)
     html = BeautifulSoup(page.text, "html.parser")
 
-    [h.extract for h in html('script')]
-
-    lyrics = html.find("div", class_="lyrics").get_text()
-    return lyrics
+    return html.find("div", class_="lyrics").get_text()
 
 
 def main():
@@ -114,33 +120,31 @@ def main():
     lyrics = getLyrics(path, client_auth_token)
     print(">> creating the self-similarity matrix")
     lyrics_list = re.split("\n| (|) | |, | ,", lyrics)
-    temp_list = []
-    for item in lyrics_list:
-        if item != None and item != '':
-            temp_list.append(item)
+
+    temp_list = [item for item in lyrics_list if item not in [None, '']]
     lyrics_list = temp_list
     matrix = lin_alg.zeros((len(lyrics_list), len(lyrics_list)))
 
-    ppmfile = open("repetition-matrix.ppm", 'w+')  # note the binary flag
+    # note the binary flag
+    ppmfile = open("repetition-matrix.ppm", 'w+')
+
     ppmfile.write("%s\n" % ('P3'))
     ppmfile.write("%d %d\n" % (len(lyrics_list), len(lyrics_list)))
     ppmfile.write("255\n")
 
     print(">> creating " + chalk.blue("repetition-matrix.ppm") + " file")
-    out = 0
     ins = 0
-    while out < len(lyrics_list):
+    for out in range(len(lyrics_list)):
         while ins < len(lyrics_list):
-            if(lyrics_list[out] == lyrics_list[ins]):
+            if lyrics_list[out] == lyrics_list[ins]:
                 ppmfile.write("178 34 34 ")
                 matrix[out, ins] = 1
                 matrix[ins, out] = 1
             else:
                 ppmfile.write("225 225 225 ")
 
-            ins = ins+1
+            ins += 1
         ins = 0
-        out = out+1
     ppmfile.seek(0, 2)
     size = ppmfile.tell()
     ppmfile.truncate(size - 1)
@@ -149,5 +153,5 @@ def main():
     print(">> " + chalk.green("complete"))
 
 
-if (__name__ == "__main__"):
+if __name__ == "__main__":
     main()
