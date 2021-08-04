@@ -1,6 +1,18 @@
+# IDE Configuration Folders
+.vscode
+.idea
+
+# Python environment
 venv/
-credentials.ini
-.vscode/
-Makefile
+__pycache__
+
+# Ouput
 repetition-matrix.ppm
 picture.ppm
+
+# Genius credentials
+.env
+
+# Other
+credentials.ini
+Makefile
