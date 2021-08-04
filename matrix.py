@@ -44,7 +44,6 @@ def search_song(song_name, token):
         )
 
     result = response.json()['response']['hits'][0]['result']
-    print(result)
     return result['api_path'], result['full_title']
 
 
@@ -56,8 +55,6 @@ def get_lyrics(path, token):
         :param token - the Spotify Authentication token
         :return the lyrics of the song
     """
-    print(path, token)
-
     song_url = BASE_URL + path
 
     response = requests.get(
@@ -79,17 +76,14 @@ def get_lyrics(path, token):
     return lyrics_div.get_text()
 
 
-def create_ppm_file(lyrics_list):
-    # note the binary flag
-    matrix = lin_alg.zeros((len(lyrics_list), len(lyrics_list)))
+def create_ppm_file(matrix, lyrics_list):
+    print(">> creating " + chalk.blue("repetition-matrix.ppm") + " file")
 
     ppmfile = open("repetition-matrix.ppm", 'w+')
 
     ppmfile.write("%s\n" % ('P3'))
     ppmfile.write("%d %d\n" % (len(lyrics_list), len(lyrics_list)))
     ppmfile.write("255\n")
-
-    print(">> creating " + chalk.blue("repetition-matrix.ppm") + " file")
 
     for out in range(len(lyrics_list)):
         for ins in range(len(lyrics_list)):
@@ -127,11 +121,15 @@ def main():
     path, name = search_song(song_name, credentials["client_access_token"])
     print(">> match found -> \033[0;32m" + name + "\033[0m")
     print(">> scraping lyrics and removing common words")
+
     lyrics = get_lyrics(path, credentials["client_access_token"])
+    lyrics_list = list(filter(bool, re.split("\n| (|) | |, | ,", lyrics)))
+
     print(">> creating the self-similarity matrix")
 
-    lyrics_list = list(filter(bool, re.split("\n| (|) | |, | ,", lyrics)))
-    create_ppm_file(lyrics_list)
+    # note the binary flag
+    matrix = lin_alg.zeros((len(lyrics_list), len(lyrics_list)))
+    create_ppm_file(matrix, lyrics_list)
 
     print(">> " + chalk.green("complete"))
 
