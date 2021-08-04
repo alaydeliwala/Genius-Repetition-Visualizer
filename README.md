@@ -19,7 +19,9 @@ The output available in a `repetition-matrix.ppm` file
 
 ## Setup
 ### Getting Access to the Genius API
-To use this program you must update `credentials.txt` to contain your Genius API credentials.
+To use this program you must create a `.env` to contain your Genius API credentials.
+Copy the `.env.example` file and fill your Api Credentials in.
+
 [Click here to create Genius Api Credentials](https://genius.com/api-clients)
 ### Auto Installation using pip!
 

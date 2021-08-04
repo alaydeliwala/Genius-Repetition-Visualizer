@@ -10,6 +10,9 @@ __pycache__
 repetition-matrix.ppm
 picture.ppm
 
+# Genius credentials
+.env
+
 # Other
 credentials.ini
 Makefile

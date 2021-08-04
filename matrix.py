@@ -1,50 +1,13 @@
-import requests
-import time
-from bs4 import BeautifulSoup
-import numpy as lin_alg
-import os
 # Using regex to get client information
 import re
+
+import dotenv
+import numpy as lin_alg
+import requests
 import simple_chalk as chalk
+from bs4 import BeautifulSoup
 
 BASE_URL = "http://api.genius.com"
-
-
-def loadCredentials():
-    """
-        Loads the credentials from the credentials.txt file
-        Credentials can be generated using the
-            Genius API Management Site
-
-        :return the users Genius client id,
-            client secret and client access token
-    """
-    # Makes the contents of the file into a list
-    credentials = [line.rstrip('\n') for line in open('credentials.txt')]
-
-    # Loops through the file to look for the specified information
-    for line in credentials:
-        if "client_id" in line:
-            client_id = re.findall(r'[\"\']([^\"\']*)[\"\']', line)[0]
-
-        if "client_secret" in line:
-            client_secret = re.findall(r'[\"\']([^\"\']*)[\"\']', line)[0]
-
-        # This is the only one that matters
-        # until OAuth2 can be implemented
-        if "client_access_token" in line:
-            client_access_token = re.findall(
-                r'[\"\']([^\"\']*)[\"\']', line)[0]
-
-    # Checks to see if credentials have been set
-    if not client_secret or not client_access_token or not client_access_token:
-        error_message(
-            "client_id, client_secret or client_access_token"
-            " in credentials.txt is not set."
-        )
-
-    # Returns the credentials
-    return client_id, client_secret, client_access_token
 
 
 def error_message(message):
@@ -112,12 +75,23 @@ def main():
     print(">> welcome to this repetition analyzer")
     song_name = input(">> what song would you like to visualize?\n")
     print(">> loading required credentials")
-    client_access_code, client_secure_code, client_auth_token = loadCredentials()
+
+    credentials = dotenv.dotenv_values('.env')
+
+    if any(
+            token is None for token in credentials.values()
+    ):
+        error_message(
+            "client_id, client_secret or client_access_token"
+            " in credentials.txt is not set."
+        )
+        return
+
     print(">> searching through " + chalk.yellow("Genius"))
-    path, name = searchSong(song_name, client_auth_token)
+    path, name = searchSong(song_name, credentials["client_access_token"])
     print(">> match found -> \033[0;32m" + name + "\033[0m")
     print(">> scraping lyrics and removing common words")
-    lyrics = getLyrics(path, client_auth_token)
+    lyrics = getLyrics(path, credentials["client_access_token"])
     print(">> creating the self-similarity matrix")
     lyrics_list = re.split("\n| (|) | |, | ,", lyrics)
 
