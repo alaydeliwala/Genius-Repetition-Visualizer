@@ -79,35 +79,10 @@ def get_lyrics(path, token):
     return lyrics_div.get_text()
 
 
-def main():
-    print(">> welcome to this repetition analyzer")
-    song_name = input(">> what song would you like to visualize?\n")
-    print(">> loading required credentials")
-
-    credentials = dotenv.dotenv_values('.env')
-
-    if any(
-            token is None for token in credentials.values()
-    ):
-        error_message(
-            "client_id, client_secret or client_access_token"
-            " in credentials.txt is not set."
-        )
-        return
-
-    print(">> searching through " + chalk.yellow("Genius"))
-    path, name = search_song(song_name, credentials["client_access_token"])
-    print(">> match found -> \033[0;32m" + name + "\033[0m")
-    print(">> scraping lyrics and removing common words")
-    lyrics = get_lyrics(path, credentials["client_access_token"])
-    print(">> creating the self-similarity matrix")
-    lyrics_list = re.split("\n| (|) | |, | ,", lyrics)
-
-    temp_list = [item for item in lyrics_list if item not in [None, '']]
-    lyrics_list = temp_list
+def create_ppm_file(lyrics_list):
+    # note the binary flag
     matrix = lin_alg.zeros((len(lyrics_list), len(lyrics_list)))
 
-    # note the binary flag
     ppmfile = open("repetition-matrix.ppm", 'w+')
 
     ppmfile.write("%s\n" % ('P3'))
@@ -130,6 +105,33 @@ def main():
     ppmfile.truncate(size - 1)
     ppmfile.seek(0, 2)
     ppmfile.write("\n")
+
+
+def main():
+    print(">> welcome to this repetition analyzer")
+    song_name = input(">> what song would you like to visualize?\n")
+    print(">> loading required credentials")
+
+    credentials = dotenv.dotenv_values('.env')
+
+    if any(
+            token is None for token in credentials.values()
+    ):
+        error_message(
+            "client_id, client_secret or client_access_token"
+            " in credentials.txt is not set."
+        )
+        return
+
+    print(">> searching through " + chalk.yellow("Genius"))
+    path, name = search_song(song_name, credentials["client_access_token"])
+    print(">> match found -> \033[0;32m" + name + "\033[0m")
+    print(">> scraping lyrics and removing common words")
+    lyrics = get_lyrics(path, credentials["client_access_token"])
+    print(">> creating the self-similarity matrix")
+
+    lyrics_list = list(filter(bool, re.split("\n| (|) | |, | ,", lyrics)))
+    create_ppm_file(lyrics_list)
 
     print(">> " + chalk.green("complete"))
 
