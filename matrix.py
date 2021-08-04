@@ -31,7 +31,7 @@ def search_song(song_name, token):
     url = BASE_URL + '/search?q=' + edited_song_name
     response = requests.get(url, headers={"Authorization": 'Bearer ' + token})
 
-    if response.status_code != 200:
+    if not response.ok:
         error_message(
             "Status Code: " + str(response.status_code) + response.body
         )
@@ -77,28 +77,28 @@ def get_lyrics(path, token):
 
 
 def create_ppm_file(matrix, lyrics_list):
-    print(">> creating " + chalk.blue("repetition-matrix.ppm") + " file")
+    print(">> creating", chalk.blue("repetition-matrix.ppm"), "file")
 
-    ppmfile = open("repetition-matrix.ppm", 'w+')
+    ppm_file = open("repetition-matrix.ppm", 'w+')
 
-    ppmfile.write("%s\n" % ('P3'))
-    ppmfile.write("%d %d\n" % (len(lyrics_list), len(lyrics_list)))
-    ppmfile.write("255\n")
+    ppm_file.write("%s\n" % 'P3')
+    ppm_file.write("%d %d\n" % (len(lyrics_list), len(lyrics_list)))
+    ppm_file.write("255\n")
 
     for out in range(len(lyrics_list)):
         for ins in range(len(lyrics_list)):
             if lyrics_list[out] == lyrics_list[ins]:
-                ppmfile.write("178 34 34 ")
+                ppm_file.write("178 34 34 ")
                 matrix[out, ins] = 1
                 matrix[ins, out] = 1
             else:
-                ppmfile.write("225 225 225 ")
+                ppm_file.write("225 225 225 ")
 
-    ppmfile.seek(0, 2)
-    size = ppmfile.tell()
-    ppmfile.truncate(size - 1)
-    ppmfile.seek(0, 2)
-    ppmfile.write("\n")
+    ppm_file.seek(0, 2)
+    size = ppm_file.tell()
+    ppm_file.truncate(size - 1)
+    ppm_file.seek(0, 2)
+    ppm_file.write("\n")
 
 
 def main():
@@ -117,9 +117,10 @@ def main():
         )
         return
 
-    print(">> searching through " + chalk.yellow("Genius"))
+    print(">> searching through", chalk.yellow("Genius"))
     path, name = search_song(song_name, credentials["client_access_token"])
-    print(">> match found -> \033[0;32m" + name + "\033[0m")
+
+    print(">> match found ->", chalk.green(name))
     print(">> scraping lyrics and removing common words")
 
     lyrics = get_lyrics(path, credentials["client_access_token"])
@@ -131,7 +132,7 @@ def main():
     matrix = lin_alg.zeros((len(lyrics_list), len(lyrics_list)))
     create_ppm_file(matrix, lyrics_list)
 
-    print(">> " + chalk.green("complete"))
+    print(">>", chalk.green("complete"))
 
 
 if __name__ == "__main__":
